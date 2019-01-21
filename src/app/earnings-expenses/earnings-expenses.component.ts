@@ -4,9 +4,9 @@ import { EarningsExpenses } from '../models/earnings-expenses.model';
 import { EarningsExpensesService } from './earnings-expenses.service';
 import swal from 'sweetalert2';
 import { Store } from '@ngrx/store';
-import { AppState } from '../app.reducer';
 import { Subscription } from 'rxjs';
-import { SHOW_LOADING, ShowLoadingAction, HideLoadingAction } from '../shared/ui.actions';
+import { ShowLoadingAction, HideLoadingAction } from '../shared/ui.actions';
+import { EarningExpenseAppState } from './earning-expenses.reducer';
 
 @Component({
 	selector: 'app-earnings-expenses',
@@ -22,7 +22,7 @@ export class EearningsExpensesComponent implements OnInit, OnDestroy {
 	loadingSubscription: Subscription = new Subscription();
 
 	constructor(private earningsExpensesService: EarningsExpensesService, 
-		private store: Store<AppState>) { }
+		private store: Store<EarningExpenseAppState>) { }
 
 	ngOnInit() {
 

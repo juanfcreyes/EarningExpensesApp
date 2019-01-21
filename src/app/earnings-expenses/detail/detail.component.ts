@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.reducer';
 import { EarningsExpenses } from 'src/app/models/earnings-expenses.model';
 import { Subscription } from 'rxjs';
 import { EarningsExpensesService } from '../earnings-expenses.service';
 import swal from 'sweetalert2';
+import { EarningExpenseAppState } from '../earning-expenses.reducer';
 
 @Component({
 	selector: 'app-detail',
@@ -16,7 +16,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 	subscription: Subscription = new Subscription();
 	items: EarningsExpenses [];
 
-	constructor(private store: Store<AppState>, 
+	constructor(private store: Store<EarningExpenseAppState>, 
 		private earningExpenseService: EarningsExpensesService) { }
 
 	ngOnInit() {

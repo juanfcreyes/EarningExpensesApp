@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
-import { User } from 'src/app/models/user.model';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
@@ -33,9 +32,6 @@ export class SidebarComponent implements OnInit {
 	logout() {
 		this.earningExpenseService.closeSubscriptions();
 		this.authService.logout();
-
-
-
 	}
 
 }

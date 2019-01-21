@@ -1,8 +1,13 @@
 import { EarningsExpenses } from '../models/earnings-expenses.model';
 import { UnionItemActions, SET_ITMES, CLEAN_ITEMS } from './earnings-expenses.actions';
+import { AppState } from '../app.reducer';
 
 export interface EarningExpenseState {
     items: EarningsExpenses [];
+}
+
+export interface EarningExpenseAppState extends AppState {
+    earningExpense: EarningExpenseState;
 }
 
 export const initState: EarningExpenseState = {

@@ -2,19 +2,16 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-
-import { DASHBOARD_ROUTES } from './dashboard/dashboard.routes';
 import { AuthGuard } from './auth/auth.guard';
 
+const PATH_MODULE = './earnings-expenses/earnings-expenses.module#EarningsExpensesModule';
 const ROUTERS: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     {
         path: '',
-        component: DashboardComponent,
-        children: DASHBOARD_ROUTES,
-        canActivate: [AuthGuard]
+        loadChildren: PATH_MODULE,
+        canLoad: [ AuthGuard ]
     },
     { path: '**', redirectTo: '' }
 ];
