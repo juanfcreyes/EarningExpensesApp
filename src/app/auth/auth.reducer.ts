@@ -1,5 +1,5 @@
 import { User } from '../models/user.model';
-import { UnionAuthActions, SET_USER } from './auth.actions';
+import { UnionAuthActions, SET_USER, UNSET_USER } from './auth.actions';
 
 export interface AuthState {
     user: User;
@@ -13,6 +13,9 @@ export function authReducer(state = initState, action: UnionAuthActions): AuthSt
     switch (action.type) {
         case SET_USER: {
             return { user : {... action.user} }
+        }
+        case UNSET_USER: {
+            return { user :null }
         }
         default: {
             return state

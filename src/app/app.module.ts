@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
 
 // Angular Fire 2
@@ -16,6 +16,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { appReducers } from './app.reducer';
 
+//Chart 
+import { ChartsModule } from 'ng2-charts';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -26,6 +29,7 @@ import { DetailComponent } from './earnings-expenses/detail/detail.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { OrderEarningExpensePipe } from './earnings-expenses/order-earning-expense.pipe';
 
 @NgModule({
   declarations: [
@@ -38,10 +42,12 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     DetailComponent,
     FooterComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    OrderEarningExpensePipe,
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase), 
@@ -52,6 +58,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
       maxAge: 25,
       logOnly: environment.production, 
     }),
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,7 +9,7 @@ import { User } from '../models/user.model';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.reducer';
 import { ShowLoadingAction, HideLoadingAction } from '../shared/ui.actions';
-import { SetUserAction } from './auth.actions';
+import { SetUserAction, UnSetUserAction } from './auth.actions';
 import { Subscription } from 'rxjs';
 
 @Injectable({
@@ -20,6 +20,7 @@ export class AuthService {
 	
 	private USER_COLLECTION: string = 'usuario';
 	private subscription: Subscription;
+	private user: User;
 
 	constructor(private angularFireAuth: AngularFireAuth,
 		private router: Router, 
@@ -31,8 +32,9 @@ export class AuthService {
 		.subscribe((fbUser: UserFireBase) => {
 			if (fbUser) {
 				this.subscription = this.angularFireDB.doc(`${fbUser.uid}/${this.USER_COLLECTION}`)
-				.valueChanges().subscribe((doc: User) => {
-					this.store.dispatch(new SetUserAction(doc))
+				.valueChanges().subscribe((user: User) => {
+					this.store.dispatch(new SetUserAction(user));
+					this.user = user;
 				});
 			} else {
 				if(this.subscription) {
@@ -79,6 +81,7 @@ export class AuthService {
 	logout() {
 		this.router.navigate(['/login']);
 		this.angularFireAuth.auth.signOut();
+		this.store.dispatch(new UnSetUserAction());
 	}
 
 	isAuth() {
@@ -90,6 +93,10 @@ export class AuthService {
 				return fbUser !== null;
 			})
 		);
+	}
+
+	getUser(): User {
+		return {...this.user}
 	}
 
 }

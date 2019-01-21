@@ -24,7 +24,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	}
 	
 	ngOnDestroy() {
-		this.susbscription.unsubscribe();
+		if (this.susbscription) {
+			this.susbscription.unsubscribe();
+		}
 	}
 	
 	onSubmit(form: any) {
