@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
 import { DASHBOARD_ROUTES } from './dashboard.routes';
-//import { AuthGuard } from '../auth/auth.guard';
 
 const dashboardRoutes: Routes = [
 	{

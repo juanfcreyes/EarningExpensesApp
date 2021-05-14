@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { Subscription } from 'rxjs';
+import swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-register',
@@ -30,8 +31,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	}
 	
 	onSubmit(form: any) {
-		this.authService
-		.createUser(form.name, form.email, form.password);
+		let canSave = Boolean(form.name) && Boolean(form.email) && Boolean(form.password) && Boolean(form.passwordRepeated)
+		if (!canSave) {
+			swal.fire('Formulario incompleto', 'Debe llenar todos los datos del formulario', 'error');
+			return;
+		}
+		canSave = form.password === form.passwordRepeated;
+		if (canSave) {
+			this.authService
+			.createUser(form.name, form.email, form.password);
+		} else {
+			swal.fire('Passwords no coinciden', 'Los passwords deben ser iguales', 'error');
+		}
+		
 	}
 
 }

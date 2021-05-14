@@ -4,7 +4,8 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import { filter } from 'rxjs/operators';
-import { EarningsExpensesService } from 'src/app/earnings-expenses/earnings-expenses.service';
+import { EarningsExpensesService } from 'src/app/earnings-expenses/services/earnings-expenses.service';
+import { AuthState } from 'src/app/auth/auth.reducer';
 
 @Component({
 	selector: 'app-sidebar',
@@ -15,13 +16,13 @@ export class SidebarComponent implements OnInit {
 
 	userName: string;
 	subscription: Subscription = new Subscription();
-	constructor(private store: Store<AppState>, 
+	constructor(private store: Store<AppState>,
 		private authService: AuthService,
 		private earningExpenseService: EarningsExpensesService) { }
 
 	ngOnInit() {
 		this.subscription = this.store.select('auth').pipe(
-			filter(auth => auth.user !== null)
+			filter((auth:AuthState) => auth.user !== null)
 		).subscribe( auth => this.userName = auth.user.name )
 	}
 

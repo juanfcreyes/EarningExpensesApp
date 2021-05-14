@@ -1,0 +1,13 @@
+<div class="row">
+  <app-rv-form></app-rv-form>
+</div>
+
+<div class="row" *ngIf="rds && rds.length > 0">
+  <div class="col-6">
+    <app-rv-details title="Haberes" [items]="revenues"></app-rv-details>
+  </div>
+
+  <div class="col-6">
+    <app-rv-details title="Deberes" [items]="debts"></app-rv-details>
+  </div>
+</div>

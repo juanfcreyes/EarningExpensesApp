@@ -1,0 +1,36 @@
+<div class="card mt-5">
+  <div class="card-body">
+    <h4 class="card-title">{{ title }}</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Descripción</th>
+          <th>Monto</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items">
+          <td>
+            {{ item.description }}
+          </td>
+          <td>
+            {{ item.amount | currency }}
+          </td>
+          <td>
+            <button (click)="deleteItem(item)" class="btn btn-danger">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button (click)="cubrirItem(item)" class="ml-1 btn btn-info">
+              <i class="fa fa-money"></i>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>Total</td>
+          <td>{{ total | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { EarningsExpenses } from '../models/earnings-expenses.model';
-import { EarningsExpensesService } from './earnings-expenses.service';
+import { EarningsExpensesService } from './services/earnings-expenses.service';
 import swal from 'sweetalert2';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ShowLoadingAction, HideLoadingAction } from '../shared/ui.actions';
-import { EarningExpenseAppState } from './earning-expenses.reducer';
+import { EarningExpenseAppState } from './redux/earning-expenses.reducer';
 
 @Component({
 	selector: 'app-earnings-expenses',
@@ -21,7 +21,7 @@ export class EearningsExpensesComponent implements OnInit, OnDestroy {
 	loading: boolean;
 	loadingSubscription: Subscription = new Subscription();
 
-	constructor(private earningsExpensesService: EarningsExpensesService, 
+	constructor(private earningsExpensesService: EarningsExpensesService,
 		private store: Store<EarningExpenseAppState>) { }
 
 	ngOnInit() {
@@ -44,11 +44,11 @@ export class EearningsExpensesComponent implements OnInit, OnDestroy {
 		const item: EarningsExpenses = {...this.form.value, type: this.type};
 		this.earningsExpensesService.createItem(item)
 		.then(() => {
-			swal('Creado', item.description, 'success');
+			swal.fire('Creado', item.description, 'success');
 			this.store.dispatch(new HideLoadingAction());
 		});
 		this.form.reset({'amount': 0 });
-		
+
 	}
 
 

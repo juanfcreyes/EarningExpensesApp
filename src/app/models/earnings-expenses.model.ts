@@ -1,5 +1,4 @@
-export class EarningsExpenses {
-    constructor(public description: string,
-         public amount: number,
-         public type: string, public uid?: string ) {}
+import { Item } from "./item.model";
+
+export class EarningsExpenses extends Item {
 }

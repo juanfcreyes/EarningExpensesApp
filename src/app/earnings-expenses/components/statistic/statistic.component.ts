@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { EarningsExpenses } from 'src/app/models/earnings-expenses.model';
-import { EarningExpenseAppState } from '../earning-expenses.reducer';
+import { EarningExpenseAppState } from '../../redux/earning-expenses.reducer';
 
 @Component({
 	selector: 'app-statistic',
@@ -47,7 +47,6 @@ export class StatisticComponent implements OnInit {
 			}
 		}
 		this.doughnutChartData = [this.earnings, this.expenses];
-		
 	}
 
 }
