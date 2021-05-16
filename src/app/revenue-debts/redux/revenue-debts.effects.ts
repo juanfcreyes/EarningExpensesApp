@@ -3,12 +3,12 @@ import { Injectable } from "@angular/core";
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { map, withLatestFrom, mergeMap } from "rxjs/operators";
 import { Store } from "@ngrx/store";
-import { AppState, selectUser } from "src/app/app.reducer";
+import { selectUser } from "src/app/app.reducer";
 import { loadRDs, saveRD, setRDs, deleteRD, addRDMovement } from './revenue-debts.actions';
 import { from } from 'rxjs';
-import { selectActiveRd, RDAppState } from './revenue-debts.reducer';
+import { RDAppState } from './revenue-debts.reducer';
 import { EarningsExpensesService } from '../../earnings-expenses/services/earnings-expenses.service';
-import { movementTypes } from '../../models/types';
+import { movementTypes, rdStatus } from '../../models/types';
 import { EarningsExpenses } from 'src/app/models/earnings-expenses.model';
 import { discharged, pending } from 'src/app/models/constants';
 import { HideLoadingAction } from '../../shared/ui.actions';
@@ -49,7 +49,7 @@ export class RevenueDebtsEffects {
                 .pipe(map(() => {
                     const {movement} = action;
                     const newAmount = (active.amount - movement.amount);
-                    const status = newAmount === 0 ? discharged : pending;
+                    const status = newAmount === 0 ? rdStatus.discharged : rdStatus.pending;
                     this.revenuesDebtsService.updateRD(user, { ...active, amount:newAmount, status: status  });
                     if (movement.createMovement) {
                         this.earningsExpensesService

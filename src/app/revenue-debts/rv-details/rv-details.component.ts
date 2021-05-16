@@ -5,7 +5,7 @@ import { RDAdvanceComponent } from '../rd-advance/rd-advance.component';
 import { Store } from '@ngrx/store';
 import { RDAppState } from '../redux/revenue-debts.reducer';
 import { setActiveRD } from '../redux/revenue-debts.actions';
-import { discharged } from '../../models/constants';
+import { rdStatus } from 'src/app/models/types';
 
 @Component({
     selector: 'app-rv-details',
@@ -17,7 +17,7 @@ export class RVDetailsComponent implements OnInit, OnChanges {
     @Input() title: string = '';
     @Input() items: RevenueDebts[] = [];
     total: Number = 0;
-    discharged = discharged;
+    discharged = rdStatus.discharged;
 
     ngbModalOptions: NgbModalOptions = {
         backdrop: 'static',
