@@ -1,98 +1,96 @@
 <div class="card">
-  <h4 class="card-header">Filtros</h4>
-  <div class="card-body">
-    <form>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputEmail4">Fecha inicial</label>
-          <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="start" [(ngModel)]="filter.start" ngbDatepicker
-              #start="ngbDatepicker" />
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" (click)="start.toggle()" type="button">
-                <i class="fa fa-calendar"></i>
-              </button>
+    <h4 class="card-header">Filtros</h4>
+    <div class="card-body">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Fecha inicial</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd" name="start" [(ngModel)]="filter.start"
+                            ngbDatepicker #start="ngbDatepicker" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="start.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Fecha final</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd" name="end" [(ngModel)]="filter.end"
+                            ngbDatepicker #end="ngbDatepicker" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="end.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="inputEmail4">Fecha final</label>
-          <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="end" [(ngModel)]="filter.end" ngbDatepicker
-              #end="ngbDatepicker" />
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" (click)="end.toggle()" type="button">
-                <i class="fa fa-calendar"></i>
-              </button>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="type">Tipo</label>
+                    <select [(ngModel)]="filter.type" class="form-control" id="type" name="type">
+                        <option value="">Todos</option>
+                        <option value="ingreso">Ingresos</option>
+                        <option value="egreso">Egresos</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="">Busqueda</label>
+                    <button class="btn btn-outline-primary btn-block" (click)="filterRecords()">Buscar</button>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="type">Tipo</label>
-          <select [(ngModel)]="filter.type" class="form-control" id="type" name="type">
-            <option value="">Todos</option>
-            <option value="ingreso">Ingresos</option>
-            <option value="egreso">Egresos</option>
-          </select>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="">Busqueda</label>
-          <button class="btn btn-outline-primary btn-block" (click)="filterRecords()">Buscar</button>
-        </div>
-      </div>
-    </form>
-  </div>
+        </form>
+    </div>
 </div>
 
 <div class="row mt-5">
-  <div class="col-12">
-    <h4 class="card-header">Detalle de ingreso egreso</h4>
-    <div class="card">
-      <div class="card-body">
-        <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th>Descripción</th>
-              <th>Monto</th>
-              <th>Tipo</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let detail of details | orderEarningExpense">
-              <td>
-                {{ detail.description }}
-              </td>
-              <td>
-                {{ detail.amount | currency }}
-              </td>
-              <td>
-                <span [ngClass]="{
-                    'text-success': detail.type === 'ingreso',
-                    'text-danger': detail.type === 'egreso'
-                  }">
-                  {{ detail.type }}
-                </span>
-              </td>
-              <td>
-                <button (click)="deleteItem(detail)" class="btn btn-danger">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="1">
-                total
-              </td>
-              <td colspan="2">
-                4000
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="col-12">
+        <h4 class="card-header">Detalle de ingreso egreso</h4>
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Monto</th>
+                            <th>Tipo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let detail of details | orderEarningExpense">
+                            <td>
+                                {{ detail.description }}
+                            </td>
+                            <td>
+                                {{ detail.amount | currency }}
+                            </td>
+                            <td>
+                                <span
+                                    [ngClass]="{'text-success': detail.type === 'ingreso', 'text-danger': detail.type === 'egreso'}">
+                                    {{ detail.type }}
+                                </span>
+                            </td>
+                            <td>
+                                <button (click)="deleteItem(detail)" class="btn btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1">
+                                total
+                            </td>
+                            <td colspan="2">
+                                4000
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

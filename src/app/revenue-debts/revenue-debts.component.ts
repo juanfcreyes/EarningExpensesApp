@@ -5,41 +5,48 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RDAppState, selectRDsItems } from './redux/revenue-debts.reducer';
 import { selectUser } from '../app.reducer';
+import { rawTypes, rdStatus } from '../models/types';
 
 @Component({
-  selector: 'app-revenue-debts',
-  templateUrl: './revenue-debts.component.html'
+    selector: 'app-revenue-debts',
+    templateUrl: './revenue-debts.component.html'
 })
 export class RevenueDebtsComponent implements OnInit, OnDestroy {
 
-  loadSubscription: Subscription = new Subscription();
-  userSubscription: Subscription = new Subscription();
-  revenues: RevenueDebts[] = [];
-  debts: RevenueDebts[] = [];
-  rds: RevenueDebts[] = [];
+    loadSubscription: Subscription = new Subscription();
+    userSubscription: Subscription = new Subscription();
+    revenues: RevenueDebts[] = [];
+    debts: RevenueDebts[] = [];
+    rds: RevenueDebts[] = [];
 
-  constructor(private store: Store<RDAppState>) { }
-  ngOnInit(): void {
-    this.userSubscription = this.store.select(selectUser).subscribe((user) => {
-      if (user) {
-        this.store.dispatch(loadRDs());
-      }
-    });
+    constructor(private store: Store<RDAppState>) { }
 
-    this.loadSubscription = this.store.select(selectRDsItems).subscribe((rds) => {
-      console.log('RevenueDebtsComponent a', rds);
-      if (rds.length > 0) {
-        this.revenues = rds.filter((rd) => rd.type === 'haber');
-        this.debts = rds.filter((rd) => rd.type === 'deber');
-        this.rds = rds;
-      }
-    });
-  }
 
-  ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-    this.loadSubscription.unsubscribe();
-  }
+    ngOnInit(): void {
+        this.userSubscription = this.store.select(selectUser).subscribe((user) => {
+            if (user) {
+                this.store.dispatch(loadRDs());
+            }
+        });
+
+        this.loadSubscription = this.store.select(selectRDsItems).subscribe((rds) => {
+            console.log('RevenueDebtsComponent a', rds);
+            if (rds.length > 0) {
+                this.revenues = rds.filter((rd) => rd.type === rawTypes.revenue).sort(this.sortRds());
+                this.debts = rds.filter((rd) => rd.type === rawTypes.debt).sort(this.sortRds());
+                this.rds = rds;
+            }
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.userSubscription.unsubscribe();
+        this.loadSubscription.unsubscribe();
+    }
+
+    sortRds() {
+        return ((a: RevenueDebts) => a.status === rdStatus.discharged ? 1 : -1);
+    }
 
 
 }

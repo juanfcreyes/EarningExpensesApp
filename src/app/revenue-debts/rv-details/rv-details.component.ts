@@ -1,36 +1,47 @@
 import { RevenueDebts } from './../../models/revenue-debts.model';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { RDAdvanceComponent } from '../rd-advance/rd-advance.component';
+import { Store } from '@ngrx/store';
+import { RDAppState } from '../redux/revenue-debts.reducer';
+import { setActiveRD } from '../redux/revenue-debts.actions';
+import { discharged } from '../../models/constants';
 
 @Component({
-  selector: 'app-rv-details',
-  templateUrl: './rv-details.component.html',
+    selector: 'app-rv-details',
+    templateUrl: './rv-details.component.html',
 })
 
 export class RVDetailsComponent implements OnInit, OnChanges {
 
-  @Input() title: string = '';
-  @Input() items: RevenueDebts[] = [];
-  total: Number = 0;
+    @Input() title: string = '';
+    @Input() items: RevenueDebts[] = [];
+    total: Number = 0;
+    discharged = discharged;
 
-  constructor() { }
-  ngOnChanges( _: SimpleChanges): void {
-    this.total = this.items.reduce( (total, item) => total + item.amount, 0);
-     console.log('ngOnChanges', _ );
-  }
+    ngbModalOptions: NgbModalOptions = {
+        backdrop: 'static',
+        keyboard: false
+    };
 
-  ngOnInit(): void {
-    this.total = this.items.reduce( (total, item) => total + item.amount, 0);
-    console.log('ngOnInit', this.title, this.items, this.total );
-  }
+    constructor(private modalService: NgbModal, private store: Store<RDAppState>) { }
 
+    ngOnChanges(_: SimpleChanges): void {
+        this.total = this.items.reduce((total, item) => total + item.amount, 0);
+        console.log('ngOnChanges', _);
+    }
 
+    ngOnInit(): void {
+        this.total = this.items.reduce((total, item) => total + item.amount, 0);
+    }
 
-  deleteItem(item) {
-    console.log(item);
-  }
+    deleteItem(item: RevenueDebts) {
+        console.log(item);
+    }
 
-  cubrirItem(item) {
-
-  }
+    makeMovement(item: RevenueDebts) {
+        this.store.dispatch(setActiveRD({rd : item}));
+        this.modalService.open(RDAdvanceComponent, this.ngbModalOptions);
+    }
 
 }

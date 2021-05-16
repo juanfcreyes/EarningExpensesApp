@@ -8,17 +8,18 @@ import { RvFormComponent } from "../revenue-debts/rv-form/rv-form.component";
 import { EffectsModule } from "@ngrx/effects";
 import { rdsReducer } from './redux/revenue-debts.reducer';
 import { RevenueDebtsEffects } from './redux/revenue-debts.effects';
+import { RDAdvanceComponent } from './rd-advance/rd-advance.component';
 
 @NgModule({
   declarations: [
     RevenueDebtsComponent,
     RVDetailsComponent,
-    RvFormComponent
+    RvFormComponent,
+    RDAdvanceComponent
   ],
   exports: [
     RevenueDebtsComponent,
-    RVDetailsComponent,
-    RvFormComponent
+    RVDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +27,9 @@ import { RevenueDebtsEffects } from './redux/revenue-debts.effects';
     ReactiveFormsModule,
     StoreModule.forFeature("rds", rdsReducer),
     EffectsModule.forFeature([RevenueDebtsEffects])
+  ],
+  entryComponents: [
+    RDAdvanceComponent
   ],
 })
 export class RevenueDebtsModule { }

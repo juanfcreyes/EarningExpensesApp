@@ -14,6 +14,12 @@ export const appReducers: ActionReducerMap<AppState> = {
 
 export const selectAuth = (state: AppState) => state.auth;
 
+export const selectUi = (state: AppState) => state.ui;
+
 export const selectUser = createSelector(
   selectAuth, (state: AuthState) => state.user
 );
+
+export const selectLoading = createSelector(
+    selectUi, (state: UIState) => state.isLoading
+  );

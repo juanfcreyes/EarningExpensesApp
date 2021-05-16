@@ -54,7 +54,7 @@ export class EarningsExpensesService {
   createItem(item: EarningsExpenses) {
     return this.angularFireDB
       .doc(this.getUrl())
-      .collection('items').add({ ...item, date: new Date() })
+      .collection('items').add({description: item.description, amount: item.amount, type: item.type, date: new Date() })
   }
 
   closeSubscriptions() {
